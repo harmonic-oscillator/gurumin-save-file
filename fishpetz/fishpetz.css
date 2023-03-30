@@ -1,0 +1,54 @@
+/*FISHPETZ CSS*/
+/*ANZOL*/
+
+body {background-color: #000;}
+
+.flex-container-absolute {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.flex-container-relative {
+  display: flex;
+  position: relative;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 600px;
+  gap: 0;
+}
+
+.flex-item {flex: 0 0 auto;}
+
+.petz-button {
+  background: none;
+  background-color: #001010;
+  color: #00FFFF;
+  margin: 0 0 1em 0;
+  padding: 1em;
+  border: 1px solid #00FFFF;
+  
+}
+
+.pet-space {
+	width: 500px;
+	height: 500px;
+	background-color: #000520;
+	border: 1px solid #FFF;
+}
+
+.petz-button:hover {background-color: #000505; color: #005050; border: 1px solid #005050;}
+.petz-button:active {background-color: none; color: #FFF; border: 1px solid #FFF;}
+
+#FISH {}
