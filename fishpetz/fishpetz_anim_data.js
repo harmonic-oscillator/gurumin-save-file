@@ -1,7 +1,13 @@
 //FISHPETZ ANIMATION DATA
 //ANZOL
 
+/*ANIMATION TARGETS!*/
+
 var anim_img_id_00 = document.getElementById('FISH');
+
+/*TOTAL FRAMES FOR EACH RESPECTIVE TARGET*/
+
+//TARGET ONE: FISH
 
 var frame_01 = 'fishframes/spin-1.png';
 var frame_02 = 'fishframes/spin-2.png';
@@ -96,6 +102,13 @@ var frame_76 = 'fishframes/green-blob-out-1.png';
 var frame_77 = 'fishframes/green-blob-out-2.png';
 
 /*ARRAYS FOR EACH ANIMATION SUBSET*/
+//STATE MACHINE HANDLES PASSIVE AND ACTIVE ANIMATION SETS
+//EACH STATE (SET) MAY CONTAIN SUBSETS! ALLOWING FOR THINGS LIKE RARE FRAMES
+//SETS OF FRAMES COMPOSE EACH SUBSET
+//PASSIVE ANIMATION SETS HAVE WEIGHTS FOR THEIR SUBSETS, SO THAT THE ANIMATION CHOOSES ITS OWN COURSE
+
+
+//TARGET ONE
 
 //PASSIVE STATE ONE
 var spin_array = [frame_01, frame_02, frame_03, frame_04, frame_05, frame_06, frame_07, frame_08];
@@ -123,26 +136,28 @@ var green_blob_out_array = [frame_76, frame_77];
 
 /*WEIGHTS*/
 
+//TARGET ONE
+
 //PASSIVE STATE ONE
-var spin_state_weighting = [0.8, 0.1, 0, 0, 0.1, 0, 0, 0, 0, 0];
-var submerge_state_weighting = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
-var bubbles_state_weighting = [0, 0, 0.8, 0.2, 0, 0, 0, 0, 0, 0];
-var emerge_state_weighting = [0.999, 0, 0, 0, 0.001, 0, 0, 0, 0, 0];
-var color_state_weighting = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
+var spin_substate_weighting = [0.7, 0.3, 0, 0];
+var submerge_substate_weighting = [0, 0, 1, 0];
+var bubbles_substate_weighting = [0, 0, 0.8, 0.2];
+var emerge_substate_weighting = [1, 0, 0, 0];
+var color_substate_weighting = [];
 
 //PASSIVE STATE TWO
-var green_spin_state_weighting = [0, 0, 0, 0, 0, 0.8, 0.1, 0, 0, 0.1];
-var green_submerge_state_weighting = [0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
-var green_bubbles_state_weighting = [0, 0, 0, 0, 0, 0, 0, 0.8, 0.2, 0];
-var green_emerge_state_weighting = [0, 0, 0, 0, 0, 0.999, 0, 0, 0, 0.001];
-var green_color_state_weighting = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var green_spin_substate_weighting = [0.7, 0.3, 0, 0];
+var green_submerge_substate_weighting = [0, 0, 1, 0];
+var green_bubbles_substate_weighting = [0, 0, 0.8, 0.2];
+var green_emerge_substate_weighting = [1, 0, 0, 0];
+var green_color_substate_weighting = [];
 
 //ACTIVE STATE ONE
-var blob_in_state_weighting = [];
-var blob_state_weighting = [];
-var blob_out_state_weighting = [];
+var blob_in_substate_weighting = [0, 1, 0];
+var blob_substate_weighting = [];
+var blob_out_substate_weighting = [];
 
 //ACTIVE STATE TWO
-var green_blob_in_state_weighting = [];
-var green_blob_state_weighting = [];
-var green_blob_out_state_weighting = [];
+var green_blob_in_substate_weighting = [0, 1, 0];
+var green_blob_substate_weighting = [];
+var green_blob_out_substate_weighting = [];

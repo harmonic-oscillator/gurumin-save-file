@@ -13,6 +13,7 @@ class state {
 /*VARIABLES*/
 
 var currentState;
+var currentSubstate;
 var isPassive;
 
 var passiveState0_weights = [0.999, 0.001, 0, 0];
@@ -30,6 +31,7 @@ var statesList = [passiveState0, passiveState1, activeState0, activeState1];
 
 function init() {
 	currentState = 0;
+	currentSubstate = 0;
 	isPassive = true;
 }
 
