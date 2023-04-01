@@ -3,7 +3,7 @@
 
 /*ANIMATION TARGETS!*/
 
-var anim_img_id_00 = document.getElementById('FISH');
+var target_00 = document.getElementById('FISH');
 
 /*TOTAL FRAMES FOR EACH RESPECTIVE TARGET*/
 
@@ -107,7 +107,6 @@ var frame_77 = 'fishframes/green-blob-out-2.png';
 //SETS OF FRAMES COMPOSE EACH SUBSET
 //PASSIVE ANIMATION SETS HAVE WEIGHTS FOR THEIR SUBSETS, SO THAT THE ANIMATION CHOOSES ITS OWN COURSE
 
-
 //TARGET ONE
 
 //PASSIVE STATE ONE
@@ -135,29 +134,31 @@ var green_blob_array = [frame_73,frame_74, frame_75];
 var green_blob_out_array = [frame_76, frame_77];
 
 /*WEIGHTS*/
+//LIKELIHOOD OF A GIVEN SUBSTATE TO BE CHOSEN AFTER THE NAMED STATE COMPLETES A LOOP
+//LISTED IN ORDER OF THEIR RESPECTIVE APPEARANCE WITHIN EACH GROUP'S WEIGHT ARRAY
 
 //TARGET ONE
 
 //PASSIVE STATE ONE
-var spin_substate_weighting = [0.7, 0.3, 0, 0];
-var submerge_substate_weighting = [0, 0, 1, 0];
-var bubbles_substate_weighting = [0, 0, 0.8, 0.2];
-var emerge_substate_weighting = [1, 0, 0, 0];
-var color_substate_weighting = [];
+var spin_substate_weights = [0.7, 0.3, 0, 0, 0];
+var submerge_substate_weights = [0, 0, 1, 0, 0];
+var bubbles_substate_weights = [0, 0, 0.8, 0.2, 0];
+var emerge_substate_weights = [1, 0, 0, 0, 0];
+var color_substate_weights = [1, 0, 0, 0, 0];
 
 //PASSIVE STATE TWO
-var green_spin_substate_weighting = [0.7, 0.3, 0, 0];
-var green_submerge_substate_weighting = [0, 0, 1, 0];
-var green_bubbles_substate_weighting = [0, 0, 0.8, 0.2];
-var green_emerge_substate_weighting = [1, 0, 0, 0];
-var green_color_substate_weighting = [];
+var green_spin_substate_weights = [0.7, 0.3, 0, 0, 0];
+var green_submerge_substate_weights = [0, 0, 1, 0, 0];
+var green_bubbles_substate_weights = [0, 0, 0.8, 0.2, 0];
+var green_emerge_substate_weights = [1, 0, 0, 0, 0];
+var green_color_substate_weights = [1, 0, 0, 0, 0];
 
 //ACTIVE STATE ONE
-var blob_in_substate_weighting = [0, 1, 0];
-var blob_substate_weighting = [];
-var blob_out_substate_weighting = [];
+var blob_in_substate_weights = [0, 1, 0];
+var blob_substate_weights = [];
+var blob_out_substate_weights = [];
 
 //ACTIVE STATE TWO
-var green_blob_in_substate_weighting = [0, 1, 0];
-var green_blob_substate_weighting = [];
-var green_blob_out_substate_weighting = [];
+var green_blob_in_substate_weights = [0, 1, 0];
+var green_blob_substate_weights = [];
+var green_blob_out_substate_weights = [];
