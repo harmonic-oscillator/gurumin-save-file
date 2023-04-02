@@ -3,21 +3,8 @@
 
 /*CLASSES*/
 
-//PAIRS ANIMATION SUBSETS WITH THEIR WEIGHTS
-//ANIMSTATES PROVIDE ALL ASSETS FOR ANY "STATE" IN THE STATE MACHINE, COMPOSED BY GROUPS OF SUBSTATES
-//IF BLOCKER IS TRUE, STATE CANNOT SWITCH AFTER SUBSTATE IS PLAYED (INNER-TRANSITIONAL STATES PROBABLY BLOCK)
-//IF BLOCKER IS FALSE, STATE CAN SWITCH SEAMLESSLY AFTER SUBSTATE IS FINISHED
-class substate {
-	constructor(tag, frames, weights, blocker) {
-		this.tag = tag;
-		this.frames = frames;
-		this.weights = weights;
-		this.blocker = blocker;
-	}
-}
-
 //BUILD EACH STATE'S ANIMATIONS!
-//COMPONENTS OF EACH ANIMATION: TARGET (IMG ID), ANIM SET, INITIAL SUBSTATE (ANIM SET[0]), REVERSAL BOOLEAN (ANIM PLAY DIRECTION)
+//COMPONENTS: TARGET (IMG ID), SET (GROUP OF SUBSTATES), INITIAL SUBSTATE (SET[0]), REVERSAL BOOLEAN (ANIM PLAY DIRECTION)
 class animState {
 	constructor(target, set, reversal_boolean) {
 		this.target = target;
@@ -31,9 +18,22 @@ class animState {
 	}
 }
 
+//PAIRS ANIMATION SUBSETS WITH THEIR WEIGHTS
+//ANIMSTATES PROVIDE ALL ASSETS FOR ANY "STATE" IN THE STATE MACHINE, COMPOSED BY GROUPS OF SUBSTATES
+//IF BLOCKER IS TRUE, STATE CANNOT SWITCH AFTER SUBSTATE IS PLAYED (INNER-TRANSITIONAL STATES PROBABLY BLOCK)
+//IF BLOCKER IS FALSE, STATE CAN SWITCH SEAMLESSLY AFTER SUBSTATE IS FINISHED
+class substate {
+	constructor(tag, frames, weights, blocker) {
+		this.tag = tag;
+		this.frames = frames;
+		this.weights = weights;
+		this.blocker = blocker;
+	}
+}
+
 /*VARIABLES*/
 
-var looperCue = false;
+var looperCue = false; //STATES CANNOT SWITCH UNTIL AN ANIMATION SEQUENCE FINISHES AND GIVES THIS CUE
 var currentAnim;
 
 var substate_spin = new substate ("SPIN", spin_array, spin_substate_weights, false);
@@ -74,6 +74,8 @@ var t = setInterval(function(){updateAnim()},100);
 
 /*FUNCTIONS*/
 
+function animInit() {currentAnim = animState_00;}
+
 function updateAnim() { //LISTENS FOR STATE MACHINE'S CURRENT STATE AND SETS ANIMATION ACCORDINGLY
 	if (isPassive) {
 		if (currentState == 0) {
@@ -107,16 +109,16 @@ function updateAnim() { //LISTENS FOR STATE MACHINE'S CURRENT STATE AND SETS ANI
 }
 
 function updateForward(anim) {
-	anim.currentFrame++;
 	if (anim.currentFrame >= anim.set[anim.currentSubstate].frames.length) {
 		
 		looper(anim); //RUNS THE LOOPER AT THE END OF EACH FRAME SEQUENCE
-		anim.currentFrame = 0;
 		looperCue = true;
+		anim.currentFrame = 0;
 	}
 	anim.target.src = anim.set[anim.currentSubstate].frames[anim.currentFrame];
-	currentSubstate = anim.currentSubstate;
 	console.log("[" + currentState + "] [" + anim.currentSubstate + ": " + anim.set[anim.currentSubstate].tag + "] [" + anim.currentFrame + "]");
+	anim.currentFrame++;
+	
 }
 
 function updateReverse(anim) {
@@ -126,7 +128,6 @@ function updateReverse(anim) {
 		looper(anim); //RUNS THE LOOPER AT THE END OF EACH FRAME SEQUENCE
 	}
 	anim.target.src = anim.set[anim.currentSubstate].frames[anim.currentFrame];
-	//console.log("[" + currentState + "] [" + currentSubstate + ": " + anim.set[currentSubstate].tag + "] [" + anim.currentFrame + "]");
 }
 
 //RUNS A CHECKPOINT AT THE END OF EACH SUBSET LOOP
@@ -134,7 +135,7 @@ function updateReverse(anim) {
 //ALLOWS STATE CHANGES TO RUN AT THE END OF A PRIOR SUBSTATE LOOP (?????????????????????????????)
 
 function looper(anim) {
-	console.log("LOOPER! [" + currentState + "] [" + anim.currentSubstate + "] [" + anim.currentFrame + "]");
+	//console.log("LOOPER! [" + currentState + "] [" + anim.currentSubstate + "] [" + anim.currentFrame + "]");
 	var r = Math.random();
 	//console.log(r);
 	if (anim.set[anim.currentSubstate].weights == null) {return;}
@@ -147,6 +148,7 @@ function looper(anim) {
 	for (let i = 0; i < anim.set[anim.currentSubstate].weights.length; i++) {
 		if (r < anim.set[anim.currentSubstate].weights[i]) {
 			anim.currentSubstate = i;
+			console.log("Swap Substate: " + anim.currentSubstate);
 			break;
 		}
 		else {r -= anim.set[anim.currentSubstate].weights[i];}
@@ -154,14 +156,10 @@ function looper(anim) {
 }
 
 function getSubstate() {return currentAnim.currentSubstate;}
+function getSubstateBlocker() {return currentAnim.set[currentAnim.currentSubstate].blocker;}
 
 function beginTransition (x)
 {
 	currentAnim.currentSubstate = x;
 	currentAnim.currentFrame = 0;
 }
-
-
-/*GO!*/
-
-function animInit() {currentAnim = animState_00;}

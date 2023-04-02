@@ -155,10 +155,10 @@ var green_color_substate_weights = [1, 0, 0, 0, 0];
 
 //ACTIVE STATE ONE
 var blob_in_substate_weights = [0, 1, 0];
-var blob_substate_weights = [];
-var blob_out_substate_weights = [];
+var blob_substate_weights = [0, 0, 1];
+var blob_out_substate_weights = [1, 0, 0];
 
 //ACTIVE STATE TWO
 var green_blob_in_substate_weights = [0, 1, 0];
-var green_blob_substate_weights = [];
-var green_blob_out_substate_weights = [];
+var green_blob_substate_weights = [0, 0, 1];
+var green_blob_out_substate_weights = [1, 0, 0];

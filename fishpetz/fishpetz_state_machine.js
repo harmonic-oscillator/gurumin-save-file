@@ -42,38 +42,38 @@ function update() {
 }
 
 function updateStateMachine() {
-
-	
 	//weights determine frame-by-frame which passive state is the current state
 	if (isPassive) {passiveStates();}
 	//current state can be overridden with unique states in certain cases
 	//else if (!isPassive) {activeStates();}
-	console.log ("STATUS: [" + statesList[currentState].tag + "] [" + getSubstate() + "]");
+	//console.log ("STATUS: [" + statesList[currentState].tag + "] [" + getSubstate() + "]");
 }
 
 function passiveStates() {
 	var r = Math.random();
-	console.log(getSubstate());
 	//WEIGHTS ROUTINE
 		//ADD UP ALL WEIGHTS (IN THIS CASE THEY WILL ALWAYS ADD TO 1)
 		//IF R IS LESS THAN THE FIRST WEIGHT, CHOOSE THE FIRST WEIGHT
 		//IF R IS GREATER THAN THE FIRST WEIGHT, SUBTRACT THAT WEIGHT FROM R
 		//IF R IS LESS THAN THE SECOND WEIGHT, CHOOSE THE SECOND WEIGHT
 		//AND SO ON
-	if (looperCue && !currentAnim.blocker) {
-		for (let i = 0; i < statesList[currentState].weights.length; i++) {
-			if (r < statesList[currentState].weights[i]) {
-				if(currentState != i)
-				{
-					console.log("change state: "+i);
-					currentState = i;
-					if (getSubstate() ==  0) {beginTransition(4);}
-					//else if (getSubstate() ==  2) {beginTransition(2);}
-					//else if (getSubstate() ==  4) {beginTransition(0);}
-					break;
+	if (looperCue) {
+		if(!getSubstateBlocker())
+		{
+			for (let i = 0; i < statesList[currentState].weights.length; i++) {
+				if (r < statesList[currentState].weights[i]) {
+					if(currentState != i)
+					{
+						console.log("change state: "+i);
+						currentState = i;
+						if (getSubstate() ==  0) {beginTransition(4);}
+						else if (getSubstate() ==  2) {beginTransition(2);}
+						//else if (getSubstate() ==  4) {beginTransition(0);}
+						break;
+					}
 				}
+				else {r -= statesList[currentState].weights[i];}
 			}
-			else {r -= statesList[currentState].weights[i];}
 		}
 		looperCue = false;
 	}
@@ -92,7 +92,7 @@ function button() { //specific active state is toggled on and off
 	if (isPassive == true) {
 		isPassive = false;
 		//version of active state is paired with a version of the current passive state
-		if (currentState == 0) {currentState = [2];}
+		if (currentState == 0) {currentState = [2]; beginTransition(0);}
 		else if (currentState == 1) {currentState = [3];}
 	}
 	else if (!isPassive) {
